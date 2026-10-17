@@ -37,6 +37,9 @@ public abstract class Partido {
 	}
 
 	public void registrarEstadistica(EstadisticaIndividual e) throws ReglaNegocioException {
+		if (jugado) {
+			throw new ReglaNegocioException("El partido ya se jugo");
+		}
 		if (!participantes.contains(e.getJugador())) {
 			throw new ReglaNegocioException(e.getJugador().getNombre() + " no participo en el partido");
 		}
@@ -66,8 +69,7 @@ public abstract class Partido {
 
 	protected abstract boolean permiteEmpate();
 
-	protected void alFinalizar() {
-	}
+	protected void alFinalizar() {}
 
 
 	public LocalDate getFecha() {
