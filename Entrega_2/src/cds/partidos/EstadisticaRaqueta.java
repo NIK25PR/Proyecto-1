@@ -11,6 +11,7 @@ public class EstadisticaRaqueta extends EstadisticaIndividual{
 	
 	public EstadisticaRaqueta(Socio jugador, int gamesGanados, int setsGanados, int aces, int erroresNoForzados) {
 		super(jugador);
+		this.setsGanados = setsGanados;
 		this.gamesGanados = gamesGanados;
 		this.aces = aces;
 		this.erroresNoForzados = erroresNoForzados;
