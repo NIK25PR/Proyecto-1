@@ -15,7 +15,7 @@ public class InscripcionAcademia {
 	private double puntajeRanking;
 	private List<RegistroRanking> historial;
 	
-	public InscripcionAcademia(Socio socio, Disciplina disciplina, Nivel nivel, LocalDate fechaInscripcion) {
+	InscripcionAcademia(Socio socio, Disciplina disciplina, Nivel nivel, LocalDate fechaInscripcion) {
 		this.socio = socio;
 		this.disciplina = disciplina;
 		this.nivel = nivel;
