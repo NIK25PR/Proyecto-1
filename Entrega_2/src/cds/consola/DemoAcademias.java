@@ -166,7 +166,7 @@ public class DemoAcademias {
 		Pantalla.esperarRechazo("Convocar dos veces a Ana", () -> sesion.convocar(ana));
 
 		Pantalla.esperarExito("Finalizar la sesion y registrar asistencia", () -> {
-			sesion.finzalizar();
+			sesion.finalizar();
 			a[0].registrarEstado(EstadoAsistencia.ASISTIO);
 			a[1].registrarEstado(EstadoAsistencia.LLEGO_TARDE);
 			a[2].registrarEstado(EstadoAsistencia.FALTO);

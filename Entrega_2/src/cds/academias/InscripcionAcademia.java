@@ -74,7 +74,7 @@ public class InscripcionAcademia {
 		
 	}
 	
-	public Disciplina getDisiciplina() {
+	public Disciplina getDisciplina() {
 		return disciplina;
 		
 	}

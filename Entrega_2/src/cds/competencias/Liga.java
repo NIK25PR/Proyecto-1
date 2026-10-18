@@ -36,9 +36,11 @@ public class Liga extends Competencia {
 		int puntosGanados;
 		if(partido.getMarcadorLocal() == partido.getMarcadorVisitante()) {
 			puntosGanados = puntosEmpate;
+		}else if (partido.getMarcadorLocal() > partido.getMarcadorVisitante()){
+			puntosGanados = puntosVictoria;
+			
 		}else {
 			puntosGanados = 0;
-			
 		}
 		
 		tablaDePosiciones.put(equipo, puntosActuales + puntosGanados);

@@ -15,6 +15,7 @@ public class PartidoCompetencia extends Partido{
 	private String escenario;
 	private DeporteConjunto deporte;
 	private Fase fase;
+	private Competencia competencia;
 	
 	public PartidoCompetencia(LocalDate fecha, NominaCompetencia nomina, String institucionRival, String escenario, DeporteConjunto deporte) {
 		super(fecha);
@@ -28,13 +29,22 @@ public class PartidoCompetencia extends Partido{
 	protected void validarParticipante(Socio s) throws ReglaNegocioException {
 		if (!nomina.estaHabilitado(s)) {
 			throw new ReglaNegocioException(s.getNombre() + " no esta en la nomina habilitada para esta competencia");
-			
+		}
+		if(nomina.getEquipo().estaSuspendido(s)) {
+			throw new ReglaNegocioException(s.getNombre() + " esta suspendido y no puede jugar este partido");
 		}
 	}
 	
 	@Override
 	protected boolean permiteEmpate() {
 		return deporte.permiteEmpate();
+	}
+	
+	@Override
+	protected void alFinalizar() {
+		if(competencia != null) {
+			competencia.registrarResultado(this);
+		}
 	}
 
 	
@@ -66,6 +76,11 @@ public class PartidoCompetencia extends Partido{
 	
 	public Fase getFase() {
 		return fase;
+		
+	}
+	
+	public Competencia getComeptencia() {
+		return competencia;
 	}
 
 }

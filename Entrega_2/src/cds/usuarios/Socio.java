@@ -1,6 +1,7 @@
 package cds.usuarios;
 
 import java.time.LocalDate;
+
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ public class Socio extends Usuario {
 	private final LocalDate fechaNacimiento;
 	private boolean activo;
 	private final List<RestriccionMedica> restricciones;
+	private boolean entrenador;
 
 
 	public Socio(String login, String password, String nombre, String documento, LocalDate fechaNacimiento) {
@@ -19,6 +21,7 @@ public class Socio extends Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 		activo = true;
 		restricciones = new ArrayList<RestriccionMedica>();
+		this.entrenador = false;
 	}
 
 
@@ -44,6 +47,14 @@ public class Socio extends Usuario {
 
 	public void darDeBaja() {
 		activo = false;
+	}
+	
+	public boolean esEntrenador() {
+		return entrenador;
+	}
+	
+	public void marcarComoEntrenador() {
+		this.entrenador = true;
 	}
 
 

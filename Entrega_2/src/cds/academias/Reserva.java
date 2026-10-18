@@ -23,7 +23,7 @@ public class Reserva {
 			
 		}
 		
-		if(!horaFin.isAfter(horaFin)) {
+		if(!horaFin.isAfter(horaInicio)) {
 			throw new ReglaNegocioException("La hora de fin debe ser posterior a la hora de inicio");
 			
 		}
@@ -39,7 +39,7 @@ public class Reserva {
 	}
 	
 	public boolean coincideEnHorario(Reserva otra) {
-		if(this.instalacion!= otra.instalacion || this.fecha.equals(otra.fecha)) {
+		if(this.instalacion!= otra.instalacion || !this.fecha.equals(otra.fecha)) {
 			return false;
 		}
 		return this.horaInicio.isBefore(otra.horaFin) && otra.horaInicio.isBefore(this.horaFin);

@@ -43,9 +43,13 @@ public class SesionEntrenamiento {
 		return asistencia;
 	}
 	
-	public void finzalizar() {
+	public void finalizar() {
 		finalizada = true;
 		
+	}
+	
+	public LocalDate getFecha() {
+		return fecha;
 	}
 	
 	public LocalTime getHora() {
