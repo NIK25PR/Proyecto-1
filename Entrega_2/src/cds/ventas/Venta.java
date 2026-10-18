@@ -92,6 +92,18 @@ public abstract class Venta {
 	}
 
 
+	/**
+	 * Solo para la persistencia: reconstruye una venta guardada sin volver a
+	 * validar reglas que dependen del estado actual (precios, puntos del comprador).
+	 */
+	public void restaurar(List<LineaVenta> lineasGuardadas, int puntosRedimidos, boolean confirmada) {
+		lineas.clear();
+		lineas.addAll(lineasGuardadas);
+		this.puntosRedimidos = puntosRedimidos;
+		this.confirmada = confirmada;
+	}
+
+
 	protected abstract void validarProducto(Vendible producto) throws ReglaNegocioException;
 
 	public abstract double descuento();

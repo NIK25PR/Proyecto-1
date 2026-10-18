@@ -1,0 +1,196 @@
+{
+  "ubicaciones": [
+    {
+      "nombre": "Bodega"
+    },
+    {
+      "nombre": "Tienda"
+    },
+    {
+      "nombre": "Cafeteria"
+    }
+  ],
+  "articulos": [
+    {
+      "nombre": "Balon de futbol",
+      "categoria": "Balones",
+      "precio": 120000
+    },
+    {
+      "nombre": "Balon de baloncesto",
+      "categoria": "Balones",
+      "precio": 110000
+    },
+    {
+      "nombre": "Raqueta de tenis",
+      "categoria": "Raquetas",
+      "precio": 350000
+    },
+    {
+      "nombre": "Paleta de padel",
+      "categoria": "Raquetas",
+      "precio": 280000
+    },
+    {
+      "nombre": "Tubo de pelotas de tenis",
+      "categoria": "Pelotas",
+      "precio": 45000
+    },
+    {
+      "nombre": "Camiseta del club",
+      "categoria": "Uniformes",
+      "precio": 85000
+    },
+    {
+      "nombre": "Malla de voleibol",
+      "categoria": "Mallas",
+      "precio": 190000
+    }
+  ],
+  "productosCafeteria": [
+    {
+      "tipo": "BEBIDA",
+      "nombre": "Cafe americano",
+      "precio": 4500,
+      "caliente": true,
+      "alergenos": []
+    },
+    {
+      "tipo": "BEBIDA",
+      "nombre": "Tinto",
+      "precio": 2500,
+      "caliente": true,
+      "alergenos": []
+    },
+    {
+      "tipo": "BEBIDA",
+      "nombre": "Jugo de naranja",
+      "precio": 6000,
+      "caliente": false,
+      "alergenos": []
+    },
+    {
+      "tipo": "BEBIDA",
+      "nombre": "Agua",
+      "precio": 3000,
+      "caliente": false,
+      "alergenos": []
+    },
+    {
+      "tipo": "BEBIDA",
+      "nombre": "Latte",
+      "precio": 7000,
+      "caliente": true,
+      "alergenos": [
+        "LACTEOS"
+      ]
+    },
+    {
+      "tipo": "SNACK",
+      "nombre": "Mani salado",
+      "precio": 3500,
+      "alergenos": [
+        "MANI"
+      ]
+    },
+    {
+      "tipo": "SNACK",
+      "nombre": "Brownie",
+      "precio": 5500,
+      "alergenos": [
+        "GLUTEN",
+        "LACTEOS",
+        "HUEVO"
+      ]
+    },
+    {
+      "tipo": "SNACK",
+      "nombre": "Sandwich de pollo",
+      "precio": 12000,
+      "alergenos": [
+        "GLUTEN"
+      ]
+    },
+    {
+      "tipo": "SNACK",
+      "nombre": "Vaso de fruta",
+      "precio": 5000,
+      "alergenos": []
+    }
+  ],
+  "inventarios": [
+    {
+      "articulo": "Balon de futbol",
+      "ubicacion": "Bodega",
+      "cantidad": 20
+    },
+    {
+      "articulo": "Balon de futbol",
+      "ubicacion": "Tienda",
+      "cantidad": 8
+    },
+    {
+      "articulo": "Balon de baloncesto",
+      "ubicacion": "Bodega",
+      "cantidad": 15
+    },
+    {
+      "articulo": "Balon de baloncesto",
+      "ubicacion": "Tienda",
+      "cantidad": 5
+    },
+    {
+      "articulo": "Raqueta de tenis",
+      "ubicacion": "Bodega",
+      "cantidad": 6
+    },
+    {
+      "articulo": "Raqueta de tenis",
+      "ubicacion": "Tienda",
+      "cantidad": 3
+    },
+    {
+      "articulo": "Paleta de padel",
+      "ubicacion": "Bodega",
+      "cantidad": 6
+    },
+    {
+      "articulo": "Paleta de padel",
+      "ubicacion": "Tienda",
+      "cantidad": 2
+    },
+    {
+      "articulo": "Tubo de pelotas de tenis",
+      "ubicacion": "Bodega",
+      "cantidad": 40
+    },
+    {
+      "articulo": "Tubo de pelotas de tenis",
+      "ubicacion": "Tienda",
+      "cantidad": 12
+    },
+    {
+      "articulo": "Camiseta del club",
+      "ubicacion": "Bodega",
+      "cantidad": 50
+    },
+    {
+      "articulo": "Camiseta del club",
+      "ubicacion": "Tienda",
+      "cantidad": 20
+    },
+    {
+      "articulo": "Malla de voleibol",
+      "ubicacion": "Bodega",
+      "cantidad": 4
+    },
+    {
+      "articulo": "Malla de voleibol",
+      "ubicacion": "Tienda",
+      "cantidad": 1
+    }
+  ],
+  "sugerencias": [],
+  "ventas": [],
+  "mensualidades": []
+}

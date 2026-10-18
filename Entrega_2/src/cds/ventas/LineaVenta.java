@@ -18,6 +18,15 @@ public class LineaVenta {
 		this.precioUnitario = producto.getPrecio();
 	}
 
+	/**
+	 * Para reconstruir una venta guardada con el precio que tenia ese dia.
+	 */
+	public LineaVenta(Vendible producto, int cantidad, double precioUnitario) {
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.precioUnitario = precioUnitario;
+	}
+
 
 	public double subtotal() {
 		return precioUnitario * cantidad;
