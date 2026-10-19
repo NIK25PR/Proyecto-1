@@ -5,6 +5,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import cds.ReglaNegocioException;
 import cds.academias.Academia;
 import cds.academias.Instalacion;
 import cds.conjunto.Equipo;
@@ -37,7 +38,36 @@ public class SesionEntrenamiento {
 		
 	}
 	
-	public Asistencia convocar(Socio socio) {
+	public Asistencia convocar(Socio socio) throws ReglaNegocioException {
+		if (equipo == null && academia == null) {
+			throw new ReglaNegocioException("La sesion debe pertenecer a un equipo o una academia");
+		}
+		if (equipo != null && academia != null) {
+			throw new ReglaNegocioException("La sesion debe pertenecer a un equipo o una academia, no a ambos");
+		}
+		if (equipo != null && !equipo.tieneJugador(socio)) {
+			throw new ReglaNegocioException(socio.getNombre() + " no pertenece al equipo de esta sesion");
+		}
+		if (academia != null && academia.getInscripcion(socio) == null) {
+			throw new ReglaNegocioException(socio.getNombre() + " no esta inscrito en la academia de esta sesion");
+		}
+		if (!socio.estaHabilitado()) {
+			throw new ReglaNegocioException(socio.getNombre() + " no esta habilitado para entrenar");
+		}
+		if (instalacion != null && socio.tieneBebidaCaliente() && instalacion.restringeBebidaCaliente()) {
+			throw new ReglaNegocioException("No se puede usar " + instalacion.getNombre() + " con una bebida caliente");
+		}
+		for (Asistencia a : convocados) {
+			if (a.getSocio() == socio) {
+				throw new ReglaNegocioException(socio.getNombre() + " ya esta convocado a esta sesion");
+			}
+		}
+		Asistencia asistencia = new Asistencia(socio);
+		convocados.add(asistencia);
+		return asistencia;
+	}
+
+	public Asistencia restaurarConvocado(Socio socio) {
 		Asistencia asistencia = new Asistencia(socio);
 		convocados.add(asistencia);
 		return asistencia;

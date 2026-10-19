@@ -6,7 +6,6 @@ import java.util.List;
 
 import cds.ReglaNegocioException;
 import cds.academias.Instalacion;
-import cds.academias.TipoInstalacion;
 import cds.catalogo.Alergeno;
 import cds.catalogo.ProductoCafeteria;
 import cds.catalogo.Vendible;
@@ -31,9 +30,6 @@ public class VentaCafeteria extends Venta {
 		}
 	}
 
-	/**
-	 * El socio puede cambiar la propina sugerida.
-	 */
 	public void setPorcentajePropina(double porcentaje) throws ReglaNegocioException {
 		if (porcentaje < 0) {
 			throw new ReglaNegocioException("El porcentaje de propina no puede ser negativo");
@@ -41,10 +37,6 @@ public class VentaCafeteria extends Venta {
 		porcentajePropina = porcentaje;
 	}
 
-	/**
-	 * Alergenos de todos los productos de la venta, sin repetir,
-	 * para informarlos antes de confirmar.
-	 */
 	public List<Alergeno> alergenos() {
 		List<Alergeno> resultado = new ArrayList<>();
 		for (LineaVenta linea : getLineas()) {
@@ -60,42 +52,35 @@ public class VentaCafeteria extends Venta {
 
 	
 	public void validarDespacho(Instalacion dondeEsta) throws ReglaNegocioException {
-		if (dondeEsta == null) {
+		if (!tieneBebidaCaliente()) {
 			return;
 		}
+		if (dondeEsta == null) {
+			throw new ReglaNegocioException("Debe indicar una instalacion para despachar una bebida caliente");
+		}
+		if (dondeEsta.restringeBebidaCaliente()) {
+			throw new ReglaNegocioException("RN-20: no se despachan bebidas calientes en " + dondeEsta.getTipo());
+		}
+	}
 
-		boolean tieneBebidaCaliente = false;
+	public boolean tieneBebidaCaliente() {
 		for (LineaVenta linea : getLineas()) {
 			ProductoCafeteria producto = (ProductoCafeteria) linea.getProducto();
 			if (producto.esBebidaCaliente()) {
-				tieneBebidaCaliente = true;
+				return true;
 			}
 		}
-
-		if (tieneBebidaCaliente) {
-			boolean esPadel = dondeEsta.getTipo() == TipoInstalacion.CANCHA_PADEL;
-			boolean esTenisMesaTechada = dondeEsta.getTipo() == TipoInstalacion.MESA_TENIS_MESA
-					&& dondeEsta.isTechada();
-			if (esPadel || esTenisMesaTechada) {
-				throw new ReglaNegocioException("RN-20: no se despachan bebidas calientes en " + dondeEsta.getTipo());
-			}
-		}
+		return false;
 	}
 
 	public double descuento() {
 		return 0;
 	}
 
-	/**
-	 * Impuesto al consumo del 8% sobre el subtotal.
-	 */
 	public double impuesto() {
 		return subtotal() * IMPOCONSUMO;
 	}
 
-	/**
-	 * Propina: porcentajePropina sobre el subtotal.
-	 */
 	public double cargosAdicionales() {
 		return subtotal() * porcentajePropina;
 	}

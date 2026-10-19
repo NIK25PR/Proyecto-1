@@ -17,6 +17,9 @@ public class Reserva {
 	private Modalidad modalidad;
 	
 	public Reserva(Instalacion instalacion, Socio socio, LocalDate fecha, LocalTime horaInicio, LocalTime horaFin, int numJugadores, Modalidad modalidad) throws ReglaNegocioException{
+		if (socio.tieneBebidaCaliente() && instalacion.restringeBebidaCaliente()) {
+			throw new ReglaNegocioException("No se puede usar " + instalacion.getNombre() + " con una bebida caliente");
+		}
 		int capacidad = instalacion.capacidadMaxima(modalidad);
 		if(numJugadores < 1 || numJugadores > capacidad) {
 			throw new ReglaNegocioException("La instalacion " + instalacion.getNombre() + " adminte hasta " + capacidad + " jugadores en modalidad " + modalidad);

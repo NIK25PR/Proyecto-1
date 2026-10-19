@@ -39,7 +39,7 @@ public abstract class Competencia {
 		if(jugadoresHabilitados.size()<nominaMinima) {
 			throw new ReglaNegocioException("La nomina debe tener al menos " + nominaMinima + " jugaodres habilitados");
 		}
-		NominaCompetencia nomina = new NominaCompetencia(equipo, fecha, jugadoresHabilitados);
+		NominaCompetencia nomina = new NominaCompetencia(this, equipo, fecha, jugadoresHabilitados);
 		nominas.add(nomina);
 		return nomina;
 	}

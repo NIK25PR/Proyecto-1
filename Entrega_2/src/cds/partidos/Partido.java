@@ -2,7 +2,6 @@ package cds.partidos;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cds.ReglaNegocioException;
@@ -64,6 +63,12 @@ public abstract class Partido {
 		alFinalizar();
 	}
 
+	public void restaurarEstado(int local, int visitante, boolean jugado) {
+		marcadorLocal = local;
+		marcadorVisitante = visitante;
+		this.jugado = jugado;
+	}
+
 
 	protected abstract void validarParticipante(Socio s) throws ReglaNegocioException;
 
@@ -89,11 +94,11 @@ public abstract class Partido {
 	}
 
 	public List<Socio> getParticipantes() {
-		return Collections.unmodifiableList(participantes);
+		return participantes;
 	}
 
 	public List<EstadisticaIndividual> getEstadisticas() {
-		return Collections.unmodifiableList(estadisticas);
+		return estadisticas;
 	}
 
 }

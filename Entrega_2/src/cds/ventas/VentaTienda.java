@@ -24,9 +24,6 @@ public class VentaTienda extends Venta {
 	}
 
 
-	/**
-	 * Aplica el codigo de descuento de un empleado (no acumulable).
-	 */
 	public void aplicarCodigo(Empleado dueno) throws ReglaNegocioException {
 		if (duenoCodigo != null) {
 			throw new ReglaNegocioException("La venta ya tiene un codigo de descuento");
@@ -40,9 +37,6 @@ public class VentaTienda extends Venta {
 		}
 	}
 
-	/**
-	 * 15% si el comprador es el dueno del codigo, 8% si es otro socio, 0 si no hay codigo.
-	 */
 	public double descuento() {
 		if (duenoCodigo == null) {
 			return 0;
@@ -53,16 +47,10 @@ public class VentaTienda extends Venta {
 		return subtotal() * DESCUENTO_COMPARTIDO;
 	}
 
-	/**
-	 * IVA del 19% sobre el valor despues del descuento.
-	 */
 	public double impuesto() {
 		return (subtotal() - descuento()) * IVA;
 	}
 
-	/**
-	 * Resta del inventario de la tienda las unidades vendidas.
-	 */
 	public void descontarInventario(List<Inventario> inventarioTienda) throws ReglaNegocioException {
 		for (LineaVenta linea : getLineas()) {
 			Articulo articulo = (Articulo) linea.getProducto();

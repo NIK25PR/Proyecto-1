@@ -47,4 +47,9 @@ public class Instalacion {
 		return techada;
 	}
 
+	public boolean restringeBebidaCaliente() {
+		return tipo == TipoInstalacion.CANCHA_PADEL
+				|| (tipo == TipoInstalacion.MESA_TENIS_MESA && techada);
+	}
+
 }

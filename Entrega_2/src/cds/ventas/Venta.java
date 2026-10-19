@@ -2,17 +2,12 @@ package cds.ventas;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cds.ReglaNegocioException;
 import cds.catalogo.Vendible;
 import cds.usuarios.Usuario;
 
-/**
- * Venta generica. La tienda y la cafeteria cambian que productos aceptan,
- * el descuento, el impuesto y los cargos adicionales.
- */
 public abstract class Venta {
 	public static final double PORCENTAJE_PUNTOS = 0.02;
 
@@ -21,6 +16,7 @@ public abstract class Venta {
 	private final List<LineaVenta> lineas;
 	private int puntosRedimidos;
 	private boolean confirmada;
+	private boolean puntosProcesados;
 
 
 	protected Venta(LocalDate fecha, Usuario comprador) {
@@ -29,6 +25,7 @@ public abstract class Venta {
 		lineas = new ArrayList<LineaVenta>();
 		puntosRedimidos = 0;
 		confirmada = false;
+		puntosProcesados = false;
 	}
 
 
@@ -51,23 +48,14 @@ public abstract class Venta {
 		return suma;
 	}
 
-	/**
-	 * Valor final que paga el comprador.
-	 */
 	public double total() {
 		return subtotal() - descuento() + impuesto() + cargosAdicionales() - puntosRedimidos;
 	}
 
-	/**
-	 * Puntos de fidelidad que gana el comprador: 2% del valor (1 punto = 1 peso).
-	 */
 	public int puntosGenerados() {
 		return (int) Math.floor(total() * PORCENTAJE_PUNTOS);
 	}
 
-	/**
-	 * Usa puntos del comprador como descuento.
-	 */
 	public void redimirPuntos(int puntos) throws ReglaNegocioException {
 		if (confirmada) {
 			throw new ReglaNegocioException("La venta ya fue confirmada");
@@ -75,10 +63,14 @@ public abstract class Venta {
 		if (puntos <= 0) {
 			throw new ReglaNegocioException("Los puntos a redimir deben ser mayores que 0");
 		}
-		if (puntosRedimidos + puntos > comprador.getPuntosFidelidad()) {
+		int nuevosPuntosRedimidos = puntosRedimidos + puntos;
+		if (nuevosPuntosRedimidos > comprador.getPuntosFidelidad()) {
 			throw new ReglaNegocioException("El comprador no tiene suficientes puntos");
 		}
-		puntosRedimidos += puntos;
+		if (nuevosPuntosRedimidos > subtotal() - descuento() + impuesto() + cargosAdicionales()) {
+			throw new ReglaNegocioException("Los puntos no pueden superar el total de la compra");
+		}
+		puntosRedimidos = nuevosPuntosRedimidos;
 	}
 
 	public void confirmar() throws ReglaNegocioException {
@@ -88,19 +80,43 @@ public abstract class Venta {
 		if (lineas.isEmpty()) {
 			throw new ReglaNegocioException("La venta no tiene productos");
 		}
+		validarPuntosRedimidos();
 		confirmada = true;
 	}
 
+	void procesarPuntosFidelidad() throws ReglaNegocioException {
+		if (!confirmada) {
+			throw new ReglaNegocioException("La venta debe confirmarse antes de registrarse");
+		}
+		if (puntosProcesados) {
+			throw new ReglaNegocioException("Los puntos de esta venta ya fueron procesados");
+		}
+		validarPuntosRedimidos();
+		int nuevosPuntos = puntosGenerados();
+		if (puntosRedimidos > 0) {
+			comprador.redimirPuntosFidelidad(puntosRedimidos);
+		}
+		comprador.acreditarPuntosFidelidad(nuevosPuntos);
+		puntosProcesados = true;
+	}
 
-	/**
-	 * Solo para la persistencia: reconstruye una venta guardada sin volver a
-	 * validar reglas que dependen del estado actual (precios, puntos del comprador).
-	 */
-	public void restaurar(List<LineaVenta> lineasGuardadas, int puntosRedimidos, boolean confirmada) {
-		lineas.clear();
-		lineas.addAll(lineasGuardadas);
-		this.puntosRedimidos = puntosRedimidos;
-		this.confirmada = confirmada;
+	void restaurarRegistro(int puntos, boolean estaConfirmada, boolean estanProcesados) {
+		puntosRedimidos = puntos;
+		confirmada = estaConfirmada;
+		puntosProcesados = estanProcesados;
+	}
+
+	public boolean isPuntosProcesados() {
+		return puntosProcesados;
+	}
+
+	private void validarPuntosRedimidos() throws ReglaNegocioException {
+		if (puntosRedimidos > comprador.getPuntosFidelidad()) {
+			throw new ReglaNegocioException("El comprador no tiene suficientes puntos");
+		}
+		if (puntosRedimidos > subtotal() - descuento() + impuesto() + cargosAdicionales()) {
+			throw new ReglaNegocioException("Los puntos no pueden superar el total de la compra");
+		}
 	}
 
 
@@ -126,15 +142,11 @@ public abstract class Venta {
 	}
 
 	public List<LineaVenta> getLineas() {
-		return Collections.unmodifiableList(lineas);
+		return lineas;
 	}
 
 	public int getPuntosRedimidos() {
 		return puntosRedimidos;
-	}
-
-	protected void setPuntosRedimidos(int puntosRedimidos) {
-		this.puntosRedimidos = puntosRedimidos;
 	}
 
 	public boolean isConfirmada() {

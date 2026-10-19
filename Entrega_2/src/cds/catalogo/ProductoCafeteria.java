@@ -1,7 +1,6 @@
 package cds.catalogo;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class ProductoCafeteria implements Vendible {
@@ -39,7 +38,7 @@ public abstract class ProductoCafeteria implements Vendible {
 	}
 
 	public List<Alergeno> getAlergenos() {
-		return Collections.unmodifiableList(alergenos);
+		return alergenos;
 	}
 
 }

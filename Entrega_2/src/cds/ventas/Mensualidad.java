@@ -6,9 +6,6 @@ import java.time.YearMonth;
 import cds.ReglaNegocioException;
 import cds.usuarios.Socio;
 
-/**
- * Cuota mensual de un socio. Cuenta en el rubro MENSUALIDAD de los reportes.
- */
 public class Mensualidad {
 	private final Socio socio;
 	private final YearMonth mes;

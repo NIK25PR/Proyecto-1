@@ -1,5 +1,6 @@
 package cds.entrenamiento;
 
+import cds.ReglaNegocioException;
 import cds.usuarios.Socio;
 
 public class Asistencia {
@@ -20,7 +21,7 @@ public class Asistencia {
 		
 	}
 	
-	public void calificar(int nota, String comentario) {
+	public void calificar(int nota, String comentario) throws ReglaNegocioException {
 		this.evaluacion = new EvaluacionDesempeno(nota, comentario);
 		
 	}

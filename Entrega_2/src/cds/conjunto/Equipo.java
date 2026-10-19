@@ -2,7 +2,6 @@ package cds.conjunto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cds.usuarios.Socio;
@@ -52,7 +51,7 @@ public class Equipo {
 
 		int edadSocio = s.getEdad(hoy);
 		if (!categoria.admite(edadSocio)) {
-			throw new ReglaNegocioException(s.getNombre() + " tiene " + edadSocio + " años y " + nombre + " es " + categoria.getNombre());
+			throw new ReglaNegocioException(s.getNombre() + " tiene " + edadSocio + " anos y " + nombre + " es " + categoria.getNombre());
 		}
 
 		miembros.add(new MiembroEquipo(s, posicion, numero, hoy));
@@ -127,8 +126,12 @@ public class Equipo {
 		return activo;
 	}
 
+	public List<Suspension> getSuspensiones() {
+		return suspensiones;
+	}
+
 	public List<MiembroEquipo> getMiembros() {
-		return Collections.unmodifiableList(miembros);
+		return miembros;
 	}
 
 }

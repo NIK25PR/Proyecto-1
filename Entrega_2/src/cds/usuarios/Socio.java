@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Socio extends Usuario {
@@ -71,7 +70,7 @@ public class Socio extends Usuario {
 	}
 
 	public List<RestriccionMedica> getRestricciones() {
-		return Collections.unmodifiableList(restricciones);
+		return restricciones;
 	}
 
 }

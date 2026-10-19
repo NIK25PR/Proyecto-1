@@ -15,9 +15,16 @@ public class PartidoInterno extends Partido {
 
 
 	public PartidoInterno(Equipo local, Equipo visitante, LocalDate fecha) throws ReglaNegocioException {
+		this(local, visitante, fecha, true);
+	}
+
+	private PartidoInterno(Equipo local, Equipo visitante, LocalDate fecha, boolean validar) throws ReglaNegocioException {
 		super(fecha);
 		this.local = local;
 		this.visitante = visitante;
+		if (!validar) {
+			return;
+		}
 		if (local == visitante) {
 			throw new ReglaNegocioException("Un equipo no puede jugar contra si mismo");
 		}
@@ -32,6 +39,10 @@ public class PartidoInterno extends Partido {
 		}
 		validarMinimo(local);
 		validarMinimo(visitante);
+	}
+
+	public static PartidoInterno restaurar(Equipo local, Equipo visitante, LocalDate fecha) throws ReglaNegocioException {
+		return new PartidoInterno(local, visitante, fecha, false);
 	}
 
 
@@ -74,8 +85,14 @@ public class PartidoInterno extends Partido {
 			if (e instanceof EstadisticaFutbol) {
 				EstadisticaFutbol f = (EstadisticaFutbol) e;
 				if (f.generaSuspension()) {
-					String motivo = f.getRojas() >= 1 ? "tarjeta roja" : "2 amarillas";
-					Equipo suyo = local.tieneJugador(f.getJugador()) ? local : visitante;
+					String motivo = "2 amarillas";
+					if (f.getRojas() >= 1) {
+						motivo = "tarjeta roja";
+					}
+					Equipo suyo = visitante;
+					if (local.tieneJugador(f.getJugador())) {
+						suyo = local;
+					}
 					suyo.agregarSuspension(new Suspension(f.getJugador(), motivo, this));
 				}
 			}

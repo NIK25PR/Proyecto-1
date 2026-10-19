@@ -19,6 +19,13 @@ public class PartidoPractica extends Partido {
 	
 	@Override
 	protected void validarParticipante(Socio s) throws ReglaNegocioException {
+		int maximo = 2;
+		if (modalidad == Modalidad.DOBLES) {
+			maximo = 4;
+		}
+		if (getParticipantes().size() >= maximo) {
+			throw new ReglaNegocioException("El partido de " + modalidad + " admite maximo " + maximo + " jugadores");
+		}
 		InscripcionAcademia inscripcionNuevo = academia.getInscripcion(s);
 		if (inscripcionNuevo == null) {
 			throw new ReglaNegocioException(s.getNombre() + " no esta inscrito en " + academia.getNombre());
@@ -40,32 +47,34 @@ public class PartidoPractica extends Partido {
 	}
 	
 	@Override
+	public void finalizar(int local, int visitante) throws ReglaNegocioException {
+		int jugadoresPorLado = modalidad == Modalidad.DOBLES ? 2 : 1;
+		int esperados = jugadoresPorLado * 2;
+		if (getParticipantes().size() != esperados) {
+			throw new ReglaNegocioException("El partido de " + modalidad + " necesita " + esperados + " jugadores");
+		}
+		super.finalizar(local, visitante);
+	}
+
+	@Override
 	protected void alFinalizar() {
-		if(getParticipantes().size()<2) {
-			return ;
+		int jugadoresPorLado = modalidad == Modalidad.DOBLES ? 2 : 1;
+		double puntajeLocal = 0;
+		double puntajeVisitante = 0;
+		for (int i = 0; i < jugadoresPorLado; i++) {
+			puntajeLocal += academia.getInscripcion(getParticipantes().get(i)).getPuntajeRanking();
+			puntajeVisitante += academia.getInscripcion(getParticipantes().get(i + jugadoresPorLado)).getPuntajeRanking();
 		}
-		Socio jugador1 = getParticipantes().get(0);
-		Socio jugador2 = getParticipantes().get(1);
-		InscripcionAcademia inscripcion1 = academia.getInscripcion(jugador1);
-		InscripcionAcademia inscripcion2 = academia.getInscripcion(jugador2);
-		if(inscripcion1 == null || inscripcion2 == null) {
-			return ;
+		puntajeLocal = puntajeLocal / jugadoresPorLado;
+		puntajeVisitante = puntajeVisitante / jugadoresPorLado;
+		double resultadoLocal = getMarcadorLocal() > getMarcadorVisitante() ? 1 : 0;
+		double resultadoVisitante = 1 - resultadoLocal;
+		for (int i = 0; i < jugadoresPorLado; i++) {
+			InscripcionAcademia local = academia.getInscripcion(getParticipantes().get(i));
+			InscripcionAcademia visitante = academia.getInscripcion(getParticipantes().get(i + jugadoresPorLado));
+			local.actualizarPuntaje(resultadoLocal, puntajeVisitante, getFecha());
+			visitante.actualizarPuntaje(resultadoVisitante, puntajeLocal, getFecha());
 		}
-		
-		double resultado1;
-		if(getMarcadorLocal() == getMarcadorVisitante()) {
-			resultado1 = 0.5;
-		}else if(getMarcadorLocal() > getMarcadorVisitante()) {
-			resultado1 = 1;
-		}else {
-			resultado1 = 0;
-		}
-		
-		double resultado2 = 1.0 -resultado1;
-		inscripcion1.actualizarPuntaje(resultado1, inscripcion2.getPuntajeRanking(), getFecha());
-		inscripcion2.actualizarPuntaje(resultado2, inscripcion1.getPuntajeRanking(), getFecha());
-		
-		
 	}
 	
 	public Academia getAcademia() {

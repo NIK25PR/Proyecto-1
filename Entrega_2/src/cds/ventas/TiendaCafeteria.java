@@ -1,20 +1,16 @@
 package cds.ventas;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import cds.ReglaNegocioException;
+import cds.academias.Instalacion;
 import cds.catalogo.Articulo;
 import cds.catalogo.Inventario;
 import cds.catalogo.ProductoCafeteria;
 import cds.catalogo.Sugerencia;
 import cds.catalogo.Ubicacion;
 
-/**
- * Reune todo lo comercial del club: catalogo, inventario, ventas y mensualidades.
- * El Club solo necesita guardar una referencia a este objeto.
- */
 public class TiendaCafeteria {
 	private final List<Ubicacion> ubicaciones;
 	private final List<Articulo> articulos;
@@ -35,8 +31,6 @@ public class TiendaCafeteria {
 		mensualidades = new ArrayList<Mensualidad>();
 	}
 
-
-	// ------------------------------------------------------------ registrar
 
 	public void registrarUbicacion(Ubicacion u) throws ReglaNegocioException {
 		if (buscarUbicacion(u.getNombre()) != null) {
@@ -75,6 +69,27 @@ public class TiendaCafeteria {
 		if (!v.isConfirmada()) {
 			throw new ReglaNegocioException("Solo se registran ventas confirmadas");
 		}
+		if (v instanceof VentaCafeteria && ((VentaCafeteria) v).tieneBebidaCaliente()) {
+			throw new ReglaNegocioException("Debe indicar una instalacion para despachar una bebida caliente");
+		}
+		v.procesarPuntosFidelidad();
+		ventas.add(v);
+	}
+
+	public void registrarVenta(VentaCafeteria v, Instalacion dondeEsta) throws ReglaNegocioException {
+		if (!v.isConfirmada()) {
+			throw new ReglaNegocioException("Solo se registran ventas confirmadas");
+		}
+		v.validarDespacho(dondeEsta);
+		v.procesarPuntosFidelidad();
+		ventas.add(v);
+		if (v.tieneBebidaCaliente()) {
+			v.getComprador().marcarBebidaCaliente();
+		}
+	}
+
+	public void restaurarVenta(Venta v, int puntosRedimidos, boolean confirmada, boolean puntosProcesados) {
+		v.restaurarRegistro(puntosRedimidos, confirmada, puntosProcesados);
 		ventas.add(v);
 	}
 
@@ -83,11 +98,6 @@ public class TiendaCafeteria {
 	}
 
 
-	// ------------------------------------------------------------ operaciones
-
-	/**
-	 * HU-ADM-03: mueve unidades de un articulo entre dos ubicaciones.
-	 */
 	public void trasladar(Articulo articulo, Ubicacion origen, Ubicacion destino, int unidades)
 			throws ReglaNegocioException {
 		if (origen == destino) {
@@ -107,8 +117,6 @@ public class TiendaCafeteria {
 		hacia.agregar(unidades);
 	}
 
-
-	// ------------------------------------------------------------ buscar
 
 	public Ubicacion buscarUbicacion(String nombre) {
 		for (Ubicacion u : ubicaciones) {
@@ -157,34 +165,32 @@ public class TiendaCafeteria {
 	}
 
 
-	// ------------------------------------------------------------ getters
-
 	public List<Ubicacion> getUbicaciones() {
-		return Collections.unmodifiableList(ubicaciones);
+		return ubicaciones;
 	}
 
 	public List<Articulo> getArticulos() {
-		return Collections.unmodifiableList(articulos);
+		return articulos;
 	}
 
 	public List<ProductoCafeteria> getProductos() {
-		return Collections.unmodifiableList(productos);
+		return productos;
 	}
 
 	public List<Inventario> getInventarios() {
-		return Collections.unmodifiableList(inventarios);
+		return inventarios;
 	}
 
 	public List<Sugerencia> getSugerencias() {
-		return Collections.unmodifiableList(sugerencias);
+		return sugerencias;
 	}
 
 	public List<Venta> getVentas() {
-		return Collections.unmodifiableList(ventas);
+		return ventas;
 	}
 
 	public List<Mensualidad> getMensualidades() {
-		return Collections.unmodifiableList(mensualidades);
+		return mensualidades;
 	}
 
 }

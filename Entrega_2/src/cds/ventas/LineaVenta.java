@@ -2,10 +2,6 @@ package cds.ventas;
 
 import cds.catalogo.Vendible;
 
-/**
- * Un producto dentro de una venta. Guarda el precio del momento de la venta,
- * para que un cambio de precio posterior no altere ventas ya registradas.
- */
 public class LineaVenta {
 	private final Vendible producto;
 	private final int cantidad;
@@ -18,9 +14,6 @@ public class LineaVenta {
 		this.precioUnitario = producto.getPrecio();
 	}
 
-	/**
-	 * Para reconstruir una venta guardada con el precio que tenia ese dia.
-	 */
 	public LineaVenta(Vendible producto, int cantidad, double precioUnitario) {
 		this.producto = producto;
 		this.cantidad = cantidad;

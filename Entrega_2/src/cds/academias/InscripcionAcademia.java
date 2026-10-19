@@ -98,4 +98,10 @@ public class InscripcionAcademia {
 		return new ArrayList<RegistroRanking>(historial);
 		
 	}
+
+	public void restaurarRanking(double puntaje, List<RegistroRanking> registros) {
+		puntajeRanking = puntaje;
+		historial.clear();
+		historial.addAll(registros);
+	}
 }

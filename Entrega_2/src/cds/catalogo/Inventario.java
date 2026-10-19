@@ -2,9 +2,6 @@ package cds.catalogo;
 
 import cds.ReglaNegocioException;
 
-/**
- * Cuantas unidades de un articulo hay en una ubicacion.
- */
 public class Inventario {
 	private final Articulo articulo;
 	private final Ubicacion ubicacion;
@@ -18,9 +15,6 @@ public class Inventario {
 	}
 
 
-	/**
-	 * HU-ADM-02: suma unidades al inventario (reabastecimiento).
-	 */
 	public void agregar(int unidades) throws ReglaNegocioException {
 		if (unidades <= 0) {
 			throw new ReglaNegocioException("Las unidades a agregar deben ser mayores que 0");
@@ -28,9 +22,6 @@ public class Inventario {
 		cantidad += unidades;
 	}
 
-	/**
-	 * Resta unidades (por una venta o un traslado).
-	 */
 	public void retirar(int unidades) throws ReglaNegocioException {
 		if (unidades <= 0) {
 			throw new ReglaNegocioException("Las unidades a retirar deben ser mayores que 0");
