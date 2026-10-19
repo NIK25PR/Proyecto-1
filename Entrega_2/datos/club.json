@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "usuarios": [
+    {"tipo":"ADMINISTRADOR","login":"admin","password":"admin123","nombre":"Administrador Club","puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"ENTRENADOR","login":"leo","password":"leo123","nombre":"Leonardo Diaz","codigoDescuento":"LEO-CDS","puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"ENTRENADOR","login":"sara","password":"sara123","nombre":"Sara Mejia","codigoDescuento":"SAR-CDS","puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"ENTRENADOR","login":"max","password":"max123","nombre":"Maximo Vela","codigoDescuento":"MAX-CDS","puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"FISIOTERAPEUTA","login":"paula","password":"paula123","nombre":"Paula Rojas","codigoDescuento":"PAU-CDS","puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"ana","password":"ana123","nombre":"Ana Gomez","documento":"1010","fechaNacimiento":"2001-03-14","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"carlos","password":"carlos123","nombre":"Carlos Ruiz","documento":"2020","fechaNacimiento":"1998-07-02","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"beto","password":"beto123","nombre":"Beto Salas","documento":"3030","fechaNacimiento":"1999-08-01","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"diana","password":"diana123","nombre":"Diana Perez","documento":"4040","fechaNacimiento":"2000-11-23","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"eva","password":"eva123","nombre":"Eva Torres","documento":"5050","fechaNacimiento":"2002-06-30","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"felipe","password":"felipe123","nombre":"Felipe Castro","documento":"6060","fechaNacimiento":"1997-02-05","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"gabriel","password":"gabriel123","nombre":"Gabriel Rios","documento":"7070","fechaNacimiento":"1996-09-12","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false},
+    {"tipo":"SOCIO","login":"hugo","password":"hugo123","nombre":"Hugo Mora","documento":"8080","fechaNacimiento":"1995-01-20","activo":true,"entrenador":false,"restricciones":[],"puntosFidelidad":0,"tieneBebidaCaliente":false}
+  ],
+  "equipos": [
+    {"nombre":"Seneca Rojo","deporte":"FUTBOL","categoria":"MAYORES","cupoMaximo":8,"activo":true,"miembros":[
+      {"socio":"ana","posicion":"Portero","numeroCamiseta":1,"fechaIngreso":"2026-10-01"},
+      {"socio":"carlos","posicion":"Campo","numeroCamiseta":2,"fechaIngreso":"2026-10-01"},
+      {"socio":"beto","posicion":"Campo","numeroCamiseta":3,"fechaIngreso":"2026-10-01"},
+      {"socio":"diana","posicion":"Campo","numeroCamiseta":4,"fechaIngreso":"2026-10-01"}
+    ],"suspensiones":[]},
+    {"nombre":"Seneca Azul","deporte":"FUTBOL","categoria":"MAYORES","cupoMaximo":10,"activo":true,"miembros":[
+      {"socio":"eva","posicion":"Portero","numeroCamiseta":1,"fechaIngreso":"2026-10-01"},
+      {"socio":"felipe","posicion":"Campo","numeroCamiseta":2,"fechaIngreso":"2026-10-01"},
+      {"socio":"gabriel","posicion":"Campo","numeroCamiseta":3,"fechaIngreso":"2026-10-01"}
+    ],"suspensiones":[]}
+  ],
+  "instalaciones": [],
+  "academias": [
+    {"nombre":"Academia de Tenis","disciplina":"TENIS","maxInstalacionesSimultaneas":2,"inscripciones":[
+      {"socio":"ana","nivel":"PRINCIPIANTE","fecha":"2026-10-01","puntajeRanking":1000.0,"historial":[]},
+      {"socio":"beto","nivel":"INTERMEDIO","fecha":"2026-10-01","puntajeRanking":1000.0,"historial":[]},
+      {"socio":"hugo","nivel":"AVANZADO","fecha":"2026-10-02","puntajeRanking":1000.0,"historial":[]}
+    ],"instalaciones":[],"reservas":[]}
+  ],
+  "competencias": [],
+  "partidos": [],
+  "sesiones": [],
+  "tienda": {
+    "ubicaciones":[{"nombre":"Bodega"},{"nombre":"Tienda"}],
+    "articulos":[
+      {"nombre":"Balon de futbol","categoria":"Balones","precio":120000.0},
+      {"nombre":"Camiseta del club","categoria":"Ropa","precio":85000.0},
+      {"nombre":"Raqueta de tenis","categoria":"Raquetas","precio":240000.0}
+    ],
+    "inventarios":[
+      {"articulo":"Balon de futbol","ubicacion":"Bodega","cantidad":40},
+      {"articulo":"Balon de futbol","ubicacion":"Tienda","cantidad":12},
+      {"articulo":"Camiseta del club","ubicacion":"Tienda","cantidad":30},
+      {"articulo":"Raqueta de tenis","ubicacion":"Bodega","cantidad":8}
+    ],
+    "productos":[
+      {"tipo":"BEBIDA","nombre":"Tinto","precio":2500.0,"caliente":true,"alergenos":[]},
+      {"tipo":"BEBIDA","nombre":"Latte","precio":6500.0,"caliente":true,"alergenos":[]},
+      {"tipo":"BEBIDA","nombre":"Jugo de naranja","precio":5000.0,"caliente":false,"alergenos":[]},
+      {"tipo":"SNACK","nombre":"Brownie","precio":4500.0,"alergenos":[]}
+    ],
+    "sugerencias":[],
+    "ventas":[],
+    "mensualidades":[]
+  },
+  "turnos":[
+    {"empleado":"leo","dia":"MONDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"sara","dia":"MONDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"paula","dia":"MONDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"leo","dia":"TUESDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"sara","dia":"TUESDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"paula","dia":"TUESDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"max","dia":"MONDAY","horaInicio":"06:00","horaFin":"22:00"},
+    {"empleado":"max","dia":"TUESDAY","horaInicio":"06:00","horaFin":"22:00"}
+  ],
+  "solicitudes": []
+}
